@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Laravel Application Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: task-manager-app
+    container_name: task-manager-app
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:8000"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    volumes:
+      - .:/var/www
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  # Database Service (MariaDB - Best for Windows Compatibility)
+  db:
+    image: mariadb:10.11
+    container_name: task-manager-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3307:3306"
+    environment:
+      MARIADB_DATABASE: task_manager
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_USER: root
+      MARIADB_PASSWORD: password
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
