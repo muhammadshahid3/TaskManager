@@ -39,6 +39,3 @@ The infrastructure includes a secure network setup with IAM, VPC, EC2, RDS, Rout
 User → Internet → Internet Gateway → EC2 (Laravel Application) → RDS (Private Database)
 
 This architecture follows AWS best practices by keeping the database private while allowing the application layer to remain accessible through the public subnet.
-```
-
-یہ CV/project GitHub README کے لیے بھی professional لگے گا.
